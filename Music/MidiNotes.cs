@@ -180,10 +180,10 @@ namespace NeeqDMIs.Music
         static MidiNotesMethods()
         {
             midiFreqs = new double[127];
-            int a = 440; // a is 440 hz...
+            double a = 440f;
             for (int x = 0; x < 127; ++x)
             {
-                midiFreqs[x] = (a / 32) * (2 ^ ((x - 9) / 12));
+                midiFreqs[x] = (double)(a / 32f) * Math.Pow(2f ,(((double)x - 9f) / 12f));
             }
         }
 
