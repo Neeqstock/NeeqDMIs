@@ -10,15 +10,6 @@ namespace NeeqDMIs.Music
     {
         NaN = 0,
 
-        C0 = 12,
-        sC0 = 13,
-        D0 = 14,
-        sD0 = 15,
-        E0 = 16,
-        F0 = 17,
-        sF0 = 18,
-        G0 = 19,
-        sG0 = 20,
         A0 = 21,
         sA0 = 22,
         B0 = 23,
@@ -174,5 +165,27 @@ namespace NeeqDMIs.Music
             string absString = note.ToString().Remove(note.ToString().Length - 1);
             return (AbsNotes)Enum.Parse(typeof(AbsNotes), absString);
         }
+
+        /// <summary>
+        /// Returns the note frequency in Hz, given A4 = 440Hz
+        /// </summary>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        public static double GetFrequency(this MidiNotes note)
+        {
+            return midiFreqs[(int)note];
+        }
+
+        private static double[] midiFreqs;
+        static MidiNotesMethods()
+        {
+            midiFreqs = new double[127];
+            int a = 440; // a is 440 hz...
+            for (int x = 0; x < 127; ++x)
+            {
+                midiFreqs[x] = (a / 32) * (2 ^ ((x - 9) / 12));
+            }
+        }
+
     }
 }
