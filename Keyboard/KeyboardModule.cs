@@ -24,11 +24,11 @@ namespace NeeqDMIs.Keyboard
         /// <summary>
         /// Contains all the behavior modules set.
         /// </summary>
-        public List<AKeyboardBehavior> KeyboardBehaviors { get; set; } = new List<AKeyboardBehavior>();
+        public List<IKeyboardBehavior> KeyboardBehaviors { get; set; } = new List<IKeyboardBehavior>();
 
         private void OnKeyPressed(object sender, RawInputEventArgs e)
         {
-            foreach (AKeyboardBehavior behavior in KeyboardBehaviors)
+            foreach (IKeyboardBehavior behavior in KeyboardBehaviors)
             {
                 behavior.ReceiveEvent(e);
             }

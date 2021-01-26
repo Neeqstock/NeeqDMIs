@@ -58,6 +58,16 @@ namespace NeeqDMIs.MIDI
             midiOut.Send(MidiMessage.ChangeControl(7, pressure, midiChannel).RawData);
         }
 
+        public void SendMessage(int byte1, int byte2, int byte3)
+        {
+            midiOut.Send(MidiMessage.ChangeControl(byte1, byte2, midiChannel).RawData);
+        }
+
+        public void SetExpression(int expression)
+        {
+            midiOut.Send(MidiMessage.ChangeControl(11, expression, midiChannel).RawData);
+        }
+
         public void SetModulation(int modulation)
         {
             midiOut.Send(MidiMessage.ChangeControl(1, modulation, midiChannel).RawData);

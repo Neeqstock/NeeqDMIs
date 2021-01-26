@@ -61,9 +61,9 @@ namespace NeeqDMIs.ATmega
         {
             try
             {
-                for (int i = 0; i < behaviors.Count; i++)
+                foreach(ISensorReaderBehavior behavior in Behaviors)
                 {
-                    behaviors[i].ReceiveSensorRead(_serialPort.ReadLine());
+                    behavior.ReceiveSensorRead(_serialPort.ReadLine());
                 }
             }
             catch

@@ -14,5 +14,7 @@
         void SetModulation(int modulation);
         void SetPitchBend(int pitchBendValue);
         void SetPitchNoBend();
+        void SendMessage(int byte1, int byte2, int byte3);
+        void SetExpression(int expression);
     }
 }
