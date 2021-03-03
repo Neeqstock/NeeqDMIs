@@ -149,7 +149,7 @@ namespace NeeqDMIs.Music
             if (temp.Contains('s'))
             {
                 temp = temp.Remove(0, 1);
-                temp = temp + "#";
+                temp += "#";
             }
 
             return temp + octaveNumber;
@@ -176,16 +176,15 @@ namespace NeeqDMIs.Music
             return midiFreqs[(int)note];
         }
 
-        private static double[] midiFreqs;
+        private static readonly double[] midiFreqs;
         static MidiNotesMethods()
         {
             midiFreqs = new double[127];
-            double a = 440f;
+            const double a = 440f;
             for (int x = 0; x < 127; ++x)
             {
-                midiFreqs[x] = (double)(a / 32f) * Math.Pow(2f ,(((double)x - 9f) / 12f));
+                midiFreqs[x] = (double)(a / 32f) * Math.Pow(2f ,((double)x - 9f) / 12f);
             }
         }
-
     }
 }

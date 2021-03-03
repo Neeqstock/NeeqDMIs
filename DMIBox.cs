@@ -12,9 +12,6 @@ namespace NeeqDMIs
         public TobiiModule TobiiModule;
         public EyeTribeModule EyeTribeModule;
 
-        // MUSIC MODULE
-        public MusicModule MusicModule;
-
         // MISCELLANEOUS
         public IMidiModule MidiModule;
     }

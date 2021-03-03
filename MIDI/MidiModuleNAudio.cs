@@ -1,6 +1,4 @@
 ﻿using NAudio.Midi;
-using System;
-using System.Collections;
 
 namespace NeeqDMIs.MIDI
 {
@@ -9,14 +7,12 @@ namespace NeeqDMIs.MIDI
     /// </summary>
     public class MidiModuleNAudio : IMidiModule
     {
-        private int outDevice = 0;
         private int midiChannel = 0;
-        bool midiOk = false;
-
+        private bool midiOk = false;
         private MidiOut midiOut;
-
-        public int OutDevice { get => outDevice; set { outDevice = value; ResetMidiOut(); } }
+        private int outDevice = 0;
         public int MidiChannel { get => midiChannel; set { midiChannel = value; ResetMidiOut(); } }
+        public int OutDevice { get => outDevice; set { outDevice = value; ResetMidiOut(); } }
 
         public MidiModuleNAudio(int outDevice, int midiChannel)
         {
@@ -24,19 +20,6 @@ namespace NeeqDMIs.MIDI
             this.midiChannel = midiChannel;
 
             ResetMidiOut();
-        }
-
-        private void ResetMidiOut()
-        {
-            try
-            {
-                midiOut = new MidiOut(this.OutDevice);
-                midiOk = true;
-            }
-            catch
-            {
-                midiOk = false;
-            }
         }
 
         public bool IsMidiOk()
@@ -47,15 +30,6 @@ namespace NeeqDMIs.MIDI
         public void PlayNote(int pitch, int velocity)
         {
             midiOut.Send(MidiMessage.StartNote(pitch, velocity, MidiChannel).RawData);
-        }
-        public void StopNote(int pitch)
-        {
-            midiOut.Send(MidiMessage.StopNote(pitch, 0, MidiChannel).RawData);
-        }
-
-        public void SetPressure(int pressure)
-        {
-            midiOut.Send(MidiMessage.ChangeControl(7, pressure, midiChannel).RawData);
         }
 
         public void SendMessage(int byte1, int byte2, int byte3)
@@ -94,9 +68,32 @@ namespace NeeqDMIs.MIDI
             SetPitchBend(8192);
         }
 
+        public void SetPressure(int pressure)
+        {
+            midiOut.Send(MidiMessage.ChangeControl(7, pressure, midiChannel).RawData);
+        }
+
+        public void StopNote(int pitch)
+        {
+            midiOut.Send(MidiMessage.StopNote(pitch, 0, MidiChannel).RawData);
+        }
+
+        private void ResetMidiOut()
+        {
+            try
+            {
+                midiOut = new MidiOut(this.OutDevice);
+                midiOk = true;
+            }
+            catch
+            {
+                midiOk = false;
+            }
+        }
+
         /*
          * 0 - 16383
          * 8192
-         */ 
+         */
     }
 }

@@ -187,9 +187,7 @@
     <Compile Include="MIDI\MidiModuleNAudio.cs" />
     <Compile Include="Mouse\MouseFunctions.cs" />
     <Compile Include="Music\AbsNotes.cs" />
-    <Compile Include="Music\FftUtils.cs" />
     <Compile Include="Music\MidiNotes.cs" />
-    <Compile Include="Music\MusicModule.cs" />
     <Compile Include="Music\PitchUtils.cs" />
     <Compile Include="Music\Scale.cs" />
     <Compile Include="Music\ScaleCodes.cs" />
@@ -200,6 +198,7 @@
     <Compile Include="Template\RackTemplate.cs" />
     <Compile Include="Utils\AngleBaseChanger.cs" />
     <Compile Include="Utils\ArrayFilters\IDoubleFilter.cs" />
+    <Compile Include="Utils\AudioFormatFft.cs" />
     <Compile Include="Utils\ValueFilters\DoubleFilterMAExpDecaying - Copia.cs" />
     <Compile Include="Utils\ValueFilters\IDoubleFilter.cs" />
     <Compile Include="Utils\MicroLibrary.cs" />

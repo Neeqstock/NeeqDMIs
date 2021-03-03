@@ -7,8 +7,16 @@ namespace NeeqDMIs.MicroLibrary
     /// </summary>
     public class MicroStopwatch : System.Diagnostics.Stopwatch
     {
-        readonly double _microSecPerTick =
+        private readonly double _microSecPerTick =
             1000000D / System.Diagnostics.Stopwatch.Frequency;
+
+        public long ElapsedMicroseconds
+        {
+            get
+            {
+                return (long)(ElapsedTicks * _microSecPerTick);
+            }
+        }
 
         public MicroStopwatch()
         {
@@ -18,14 +26,6 @@ namespace NeeqDMIs.MicroLibrary
                                     "performance counter is not available");
             }
         }
-
-        public long ElapsedMicroseconds
-        {
-            get
-            {
-                return (long)(ElapsedTicks * _microSecPerTick);
-            }
-        }
     }
 
     /// <summary>
@@ -33,52 +33,13 @@ namespace NeeqDMIs.MicroLibrary
     /// </summary>
     public class MicroTimer
     {
-        public delegate void MicroTimerElapsedEventHandler(
-                             object sender,
-                             MicroTimerEventArgs timerEventArgs);
-        public event MicroTimerElapsedEventHandler MicroTimerElapsed;
+        private long _ignoreEventIfLateBy = long.MaxValue;
 
-        System.Threading.Thread _threadTimer = null;
-        long _ignoreEventIfLateBy = long.MaxValue;
-        long _timerIntervalInMicroSec = 0;
-        bool _stopTimer = true;
+        private bool _stopTimer = true;
 
-        public MicroTimer()
-        {
-        }
+        private System.Threading.Thread _threadTimer = null;
 
-        public MicroTimer(long timerIntervalInMicroseconds)
-        {
-            Interval = timerIntervalInMicroseconds;
-        }
-
-        public long Interval
-        {
-            get
-            {
-                return System.Threading.Interlocked.Read(
-                    ref _timerIntervalInMicroSec);
-            }
-            set
-            {
-                System.Threading.Interlocked.Exchange(
-                    ref _timerIntervalInMicroSec, value);
-            }
-        }
-
-        public long IgnoreEventIfLateBy
-        {
-            get
-            {
-                return System.Threading.Interlocked.Read(
-                    ref _ignoreEventIfLateBy);
-            }
-            set
-            {
-                System.Threading.Interlocked.Exchange(
-                    ref _ignoreEventIfLateBy, value <= 0 ? long.MaxValue : value);
-            }
-        }
+        private long _timerIntervalInMicroSec = 0;
 
         public bool Enabled
         {
@@ -99,6 +60,59 @@ namespace NeeqDMIs.MicroLibrary
             }
         }
 
+        public long IgnoreEventIfLateBy
+        {
+            get
+            {
+                return System.Threading.Interlocked.Read(
+                    ref _ignoreEventIfLateBy);
+            }
+            set
+            {
+                System.Threading.Interlocked.Exchange(
+                    ref _ignoreEventIfLateBy, value <= 0 ? long.MaxValue : value);
+            }
+        }
+
+        public long Interval
+        {
+            get
+            {
+                return System.Threading.Interlocked.Read(
+                    ref _timerIntervalInMicroSec);
+            }
+            set
+            {
+                System.Threading.Interlocked.Exchange(
+                    ref _timerIntervalInMicroSec, value);
+            }
+        }
+
+        public MicroTimer()
+        {
+        }
+
+        public MicroTimer(long timerIntervalInMicroseconds)
+        {
+            Interval = timerIntervalInMicroseconds;
+        }
+
+        public delegate void MicroTimerElapsedEventHandler(
+                                                                                                     object sender,
+                             MicroTimerEventArgs timerEventArgs);
+
+        public event EventHandler<MicroTimerEventArgs> MicroTimerElapsed;
+
+        public void Abort()
+        {
+            _stopTimer = true;
+
+            if (Enabled)
+            {
+                _threadTimer.Abort();
+            }
+        }
+
         public void Start()
         {
             if (Enabled || Interval <= 0)
@@ -108,7 +122,7 @@ namespace NeeqDMIs.MicroLibrary
 
             _stopTimer = false;
 
-            System.Threading.ThreadStart threadStart = delegate()
+            System.Threading.ThreadStart threadStart = delegate ()
             {
                 NotificationTimer(ref _timerIntervalInMicroSec,
                                   ref _ignoreEventIfLateBy,
@@ -143,21 +157,11 @@ namespace NeeqDMIs.MicroLibrary
             return _threadTimer.Join(timeoutInMilliSec);
         }
 
-        public void Abort()
-        {
-            _stopTimer = true;
-
-            if (Enabled)
-            {
-                _threadTimer.Abort();
-            }
-        }
-
-        void NotificationTimer(ref long timerIntervalInMicroSec,
+        private void NotificationTimer(ref long timerIntervalInMicroSec,
                                ref long ignoreEventIfLateBy,
                                ref bool stopTimer)
         {
-            int  timerCount = 0;
+            int timerCount = 0;
             long nextNotification = 0;
 
             MicroStopwatch microStopwatch = new MicroStopwatch();
@@ -175,9 +179,8 @@ namespace NeeqDMIs.MicroLibrary
 
                 nextNotification += timerIntervalInMicroSecCurrent;
                 timerCount++;
-                long elapsedMicroseconds = 0;
-
-                while ( (elapsedMicroseconds = microStopwatch.ElapsedMicroseconds)
+                long elapsedMicroseconds;
+                while ((elapsedMicroseconds = microStopwatch.ElapsedMicroseconds)
                         < nextNotification)
                 {
                     System.Threading.Thread.SpinWait(10);
@@ -207,19 +210,19 @@ namespace NeeqDMIs.MicroLibrary
     /// </summary>
     public class MicroTimerEventArgs : EventArgs
     {
-        // Simple counter, number times timed event (callback function) executed
-        public int  TimerCount { get; private set; }
+        // Time it took to execute previous call to callback function (OnTimedEvent)
+        public long CallbackFunctionExecutionTime { get; }
 
         // Time when timed event was called since timer started
-        public long ElapsedMicroseconds { get; private set; }
+        public long ElapsedMicroseconds { get; }
+
+        // Simple counter, number times timed event (callback function) executed
+        public int TimerCount { get; }
 
         // How late the timer was compared to when it should have been called
-        public long TimerLateBy { get; private set; }
+        public long TimerLateBy { get; }
 
-        // Time it took to execute previous call to callback function (OnTimedEvent)
-        public long CallbackFunctionExecutionTime { get; private set; }
-
-        public MicroTimerEventArgs(int  timerCount,
+        public MicroTimerEventArgs(int timerCount,
                                    long elapsedMicroseconds,
                                    long timerLateBy,
                                    long callbackFunctionExecutionTime)
