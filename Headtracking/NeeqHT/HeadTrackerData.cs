@@ -7,15 +7,12 @@ namespace NeeqDMIs.Headtracking.NeeqHT
     {
         private AngleBaseChanger pitchTransf;
         private AngleBaseChanger yawTransf;
-        private AngleBaseChanger calibrationYawTransf;
         private AngleBaseChanger rollTransf;
         public double Pitch { get; set; }
-        public double CalibrationYaw { get; set; }
         public double Yaw { get; set; }
         public double Roll { get; set; }
         public double TranspPitch { get { return pitchTransf.Transform(Pitch); } }
         public double TranspYaw { get { return yawTransf.Transform(Yaw); } }
-        public double TranspCalibrationYaw { get { return calibrationYawTransf.Transform(CalibrationYaw); } }
         public double TranspRoll { get { return rollTransf.Transform(Roll); } }
         public double Velocity { get; set; }
 
@@ -23,7 +20,6 @@ namespace NeeqDMIs.Headtracking.NeeqHT
         {
             pitchTransf = new AngleBaseChanger();
             yawTransf = new AngleBaseChanger();
-            calibrationYawTransf = new AngleBaseChanger();
             rollTransf = new AngleBaseChanger();
         }
 
@@ -32,11 +28,10 @@ namespace NeeqDMIs.Headtracking.NeeqHT
             return yawTransf.getDeltaBar();
         }
 
-        public void SetDeltaForAll()
+        public void CalibrateCenter()
         {
             pitchTransf.Delta = Pitch;
             yawTransf.Delta = Yaw;
-            calibrationYawTransf.Delta = CalibrationYaw;
             rollTransf.Delta = Roll;
             //MessageBox.Show(yawTransf.Delta.ToString(CultureInfo.InvariantCulture) + "\n" + yawTransf.getDeltaBar());
         }
