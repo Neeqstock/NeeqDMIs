@@ -176,6 +176,18 @@ namespace NeeqDMIs.Music
             return midiFreqs[(int)note];
         }
 
+        public static bool IsSharp(this MidiNotes note)
+        {
+            if (note.ToString().Contains("s"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private static readonly double[] midiFreqs;
         static MidiNotesMethods()
         {
