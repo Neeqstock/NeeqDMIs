@@ -5,7 +5,7 @@ namespace NeeqDMIs.Headtracking.NeeqHT
 {
     public class NeeqHTModule : SensorModule
     {
-        public NeeqHTModule(string portPrefix, int baudRate) : base(portPrefix, baudRate)
+        public NeeqHTModule(int baudRate, string portPrefix) : base(baudRate, portPrefix)
         {
             base.Behaviors.Add(new SBneeqHTBehavior(this));
         }

@@ -17,7 +17,7 @@ namespace NeeqDMIs.ATmega
         private List<ISensorReaderBehavior> behaviors = new List<ISensorReaderBehavior>();
         public List<ISensorReaderBehavior> Behaviors { get => behaviors; set => behaviors = value; }
 
-        public SensorModule(string portPrefix, int baudRate)
+        public SensorModule(int baudRate, string portPrefix = "COM")
         {
             _serialPort = new SerialPort();
             _serialPort.BaudRate = baudRate;

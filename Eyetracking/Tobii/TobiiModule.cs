@@ -10,7 +10,7 @@ namespace NeeqDMIs.Eyetracking.Tobii
     {
         private TobiiBlinkProcessor blinkProcessor;
         private MouseEmulator mouseEmulator;
-        public MouseEmulator MouseEmulator { get => mouseEmulator; }
+        public MouseEmulator MouseEmulator { get => mouseEmulator; set { mouseEmulator = value; } }
 
 
 
