@@ -5,10 +5,10 @@ namespace NeeqDMIs.Eyetracking.Tobii
     public class TobiiBlinkProcessor
     {
         #region EyeXModule
-        private TobiiModule EyeXModule;
+        private TobiiModule TobiiModule;
         internal TobiiBlinkProcessor(TobiiModule eyeXModule)
         {
-            EyeXModule = eyeXModule;
+            TobiiModule = eyeXModule;
         }
         #endregion
 
@@ -24,19 +24,19 @@ namespace NeeqDMIs.Eyetracking.Tobii
         #endregion
 
         #region Props and Fields
-        private int lThresh;
-        private int rThresh;
-        private int doubleThresh;
-        private int lMaxDur;
-        private int rMaxDur;
-        private int doubleMaxDur;
+        //private int lThresh;
+        //private int rThresh;
+        //private int doubleThresh;
+        //private int lMaxDur;
+        //private int rMaxDur;
+        //private int doubleMaxDur;
 
-        public int LMaxDur { get => lMaxDur; set => lMaxDur = value; }
-        public int RMaxDur { get => rMaxDur; set => rMaxDur = value; }
-        public int DoubleMaxDur { get => doubleMaxDur; set => doubleMaxDur = value; }
-        public int LThresh { get => lThresh; set => lThresh = value; }
-        public int RThresh { get => rThresh; set => rThresh = value; }
-        public int DoubleThresh { get => doubleThresh; set => doubleThresh = value; }
+        //public int LMaxDur { get => lMaxDur; set => lMaxDur = value; }
+        //public int RMaxDur { get => rMaxDur; set => rMaxDur = value; }
+        //public int DoubleMaxDur { get => doubleMaxDur; set => doubleMaxDur = value; }
+        //public int LThresh { get => lThresh; set => lThresh = value; }
+        //public int RThresh { get => rThresh; set => rThresh = value; }
+        //public int DoubleThresh { get => doubleThresh; set => doubleThresh = value; }
         #endregion
 
         public void ReceiveEyePositionData(EyePositionData data)
@@ -82,7 +82,7 @@ namespace NeeqDMIs.Eyetracking.Tobii
             #endregion
 
             #region Send messages to behaviors
-            foreach (ATobiiBlinkBehavior behavior in EyeXModule.BlinkBehaviors)
+            foreach (ATobiiBlinkBehavior behavior in TobiiModule.BlinkBehaviors)
             {
                 behavior.ReceiveCounters(leftOpenCounter, leftCloseCounter, rightOpenCounter, rightCloseCounter, doubleOpenCounter, doubleCloseCounter);
             }

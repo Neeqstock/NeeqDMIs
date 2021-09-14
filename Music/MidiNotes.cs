@@ -136,7 +136,7 @@ namespace NeeqDMIs.Music
         }
 
         /// <summary>
-        /// Converts a note into the note name in standard notation, without "s" and octave number.
+        /// Converts a note into the note name in standard notation, without "s" (substituted eventually with a "#") and octave number.
         /// </summary>
         /// <param name="note"></param>
         /// <returns></returns>

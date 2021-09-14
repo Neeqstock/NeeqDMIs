@@ -9,8 +9,9 @@ namespace NeeqDMIs.Eyetracking.Tobii
     public class TobiiModule
     {
         private TobiiBlinkProcessor blinkProcessor;
-        private MouseEmulator mouseEmulator;
-        public MouseEmulator MouseEmulator { get => mouseEmulator; set { mouseEmulator = value; } }
+        public TobiiBlinkProcessor BlinkProcessor { get => blinkProcessor; set => blinkProcessor = value; }
+
+        public MouseEmulator MouseEmulator { get; set; }
 
 
 
@@ -57,8 +58,8 @@ namespace NeeqDMIs.Eyetracking.Tobii
             eyePositionStream.Next += EyePositionStreamNext;
             headPoseStream.Next += HeadPoseStreamNext;
 
-            blinkProcessor = new TobiiBlinkProcessor(this);
-            mouseEmulator = new MouseEmulator(new PointFilterBypass());
+            BlinkProcessor = new TobiiBlinkProcessor(this);
+            MouseEmulator = new MouseEmulator(new PointFilterBypass());
         }
 
         private void HeadPoseStreamNext(object sender, StreamData<HeadPoseData> e)
@@ -75,7 +76,7 @@ namespace NeeqDMIs.Eyetracking.Tobii
         {
             LastEyePositionData = e.Data;
 
-            blinkProcessor.ReceiveEyePositionData(e.Data);
+            BlinkProcessor.ReceiveEyePositionData(e.Data);
             foreach (ITobiiEyePositionBehavior behavior in eyePositionBehaviors)
             {
                 behavior.ReceiveEyePositionData(e.Data);

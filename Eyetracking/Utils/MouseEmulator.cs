@@ -30,7 +30,7 @@ namespace NeeqDMIs.Eyetracking.Utils
             set
             {
                 cursorVisible = value;
-                MouseFunctions.ShowCursor(cursorVisible);
+               MouseFunctions.ShowCursor(cursorVisible);
             }
         }
 
