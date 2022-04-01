@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace NeeqDMIs.Headtracking.NeeqHT
 {
-    public class SBneeqHTBehavior : ISensorReaderBehavior
+    public class SBneeqHTBehavior : ISensorBehavior
     {
         private NeeqHTModule module;
         private string[] split;

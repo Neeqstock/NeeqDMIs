@@ -1,7 +1,7 @@
 ﻿using EyeTribe.ClientSdk;
 using EyeTribe.ClientSdk.Data;
+using NeeqDMIs.Eyetracking.MouseEmulator;
 using NeeqDMIs.Eyetracking.PointFilters;
-using NeeqDMIs.Eyetracking.Utils;
 using System.Collections.Generic;
 
 namespace NeeqDMIs.Eyetracking.Eyetribe
@@ -12,7 +12,7 @@ namespace NeeqDMIs.Eyetracking.Eyetribe
 
         public EyeTribeModule()
         {
-            MouseEmulator = new MouseEmulator(new PointFilterBypass());
+            MouseEmulator = new MouseEmulatorModule(new PointFilterBypass());
         }
         public void Start()
         {
@@ -27,7 +27,7 @@ namespace NeeqDMIs.Eyetracking.Eyetribe
 
         public List<IEyeTribeGazePointBehavior> GazePointBehaviors { get => gazePointBehaviors; set => gazePointBehaviors = value; }
 
-        public MouseEmulator MouseEmulator { get; set; }
+        public MouseEmulatorModule MouseEmulator { get; set; }
 
         public void OnGazeUpdate(GazeData gazeData)
         {

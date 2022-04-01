@@ -14,8 +14,8 @@ namespace NeeqDMIs.ATmega
         private string portPrefix = "COM";
         public string PortPrefix { get => portPrefix; set => portPrefix = value; }
 
-        private List<ISensorReaderBehavior> behaviors = new List<ISensorReaderBehavior>();
-        public List<ISensorReaderBehavior> Behaviors { get => behaviors; set => behaviors = value; }
+        private List<ISensorBehavior> behaviors = new List<ISensorBehavior>();
+        public List<ISensorBehavior> Behaviors { get => behaviors; set => behaviors = value; }
 
         public SensorModule(int baudRate, string portPrefix = "COM")
         {
@@ -61,7 +61,7 @@ namespace NeeqDMIs.ATmega
         {
             try
             {
-                foreach(ISensorReaderBehavior behavior in Behaviors)
+                foreach(ISensorBehavior behavior in Behaviors)
                 {
                     behavior.ReceiveSensorRead(_serialPort.ReadLine());
                 }

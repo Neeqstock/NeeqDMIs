@@ -176,26 +176,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ATmega\ISensorReaderBehavior.cs" />
+    <Compile Include="ATmega\ISensorBehavior.cs" />
     <Compile Include="ATmega\SensorModule.cs" />
     <Compile Include="DMIBox.cs" />
     <Compile Include="Eyetracking\Eyetribe\EyeTribeModule.cs" />
     <Compile Include="Eyetracking\Eyetribe\IEyeTribeGazePointBehavior.cs" />
-    <Compile Include="Eyetracking\PointFilters\PointFilterMAExpDecaying.cs" />
-    <Compile Include="Eyetracking\PointFilters\IPointFilter.cs" />
-    <Compile Include="Eyetracking\PointFilters\PointFilterMAArrayOutsiders.cs" />
-    <Compile Include="Eyetracking\PointFilters\PointFilterMAArray.cs" />
-    <Compile Include="Eyetracking\PointFilters\PointFilterBypass.cs" />
-    <Compile Include="Eyetracking\PointFilters\PointFilterMAPriority.cs" />
+    <Compile Include="Filters\PointFilters\PointFilterMAExpDecaying.cs" />
+    <Compile Include="Filters\PointFilters\IPointFilter.cs" />
+    <Compile Include="Filters\PointFilters\PointFilterMAArrayOutsiders.cs" />
+    <Compile Include="Filters\PointFilters\PointFilterMAArray.cs" />
+    <Compile Include="Filters\PointFilters\PointFilterBypass.cs" />
+    <Compile Include="Filters\PointFilters\PointFilterMAPriority.cs" />
     <Compile Include="Eyetracking\Tobii\ATobiiBlinkBehavior.cs" />
     <Compile Include="Eyetracking\Tobii\ITobiiEyePositionBehavior.cs" />
     <Compile Include="Eyetracking\Tobii\ITobiiGazePointBehavior.cs" />
     <Compile Include="Eyetracking\Tobii\ITobiiHeadPoseBehavior.cs" />
     <Compile Include="Eyetracking\Tobii\TobiiBlinkProcessor.cs" />
     <Compile Include="Eyetracking\Tobii\TobiiModule.cs" />
-    <Compile Include="Eyetracking\Utils\Eyes.cs" />
-    <Compile Include="Eyetracking\Utils\EyetrackerModels.cs" />
-    <Compile Include="Eyetracking\Utils\MouseEmulator.cs" />
+    <Compile Include="Eyetracking\Common\Eyes.cs" />
+    <Compile Include="Eyetracking\Common\EyetrackerModels.cs" />
+    <Compile Include="Eyetracking\MouseEmulator\MouseEmulatorModule.cs" />
     <Compile Include="Headtracking\NeeqHT\HeadTrackerData.cs" />
     <Compile Include="Headtracking\NeeqHT\INeeqHTbehavior.cs" />
     <Compile Include="Headtracking\NeeqHT\NeeqHTModule.cs" />
@@ -218,16 +218,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Template\DMIBoxTemplate.cs" />
     <Compile Include="Template\RackTemplate.cs" />
-    <Compile Include="Utils\AngleBaseChanger.cs" />
-    <Compile Include="Utils\ArrayFilters\IDoubleFilter.cs" />
-    <Compile Include="Utils\AudioFormatFft.cs" />
-    <Compile Include="Utils\ValueFilters\DoubleFilterMAExpDecaying - Copia.cs" />
-    <Compile Include="Utils\ValueFilters\IDoubleFilter.cs" />
+    <Compile Include="Mappers\AngleBaseChanger.cs" />
+    <Compile Include="Filters\ArrayFilters\IDoubleFilter.cs" />
+    <Compile Include="Audio\AudioFormatFft.cs" />
+    <Compile Include="Mappers\SegmentMapper.cs" />
+    <Compile Include="Filters\ValueFilters\DoubleFilterMAExpDecaying - Copia.cs" />
+    <Compile Include="Filters\ValueFilters\IDoubleFilter.cs" />
     <Compile Include="Utils\MicroLibrary.cs" />
-    <Compile Include="Utils\ValueFilters\ILongFilter.cs" />
-    <Compile Include="Utils\ValueFilters\LongFilterMAExpDecaying.cs" />
-    <Compile Include="Utils\ArrayFilters\DoubleArrayFilterMAExpDecaying.cs" />
-    <Compile Include="Utils\ValueMapper.cs" />
+    <Compile Include="Filters\ValueFilters\ILongFilter.cs" />
+    <Compile Include="Filters\ValueFilters\LongFilterMAExpDecaying.cs" />
+    <Compile Include="Filters\ArrayFilters\DoubleArrayFilterMAExpDecaying.cs" />
+    <Compile Include="Mappers\ValueMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Instructions.txt" />
@@ -243,11 +244,7 @@
     <Content Include="Libraries\XInputInterface.dll" />
     <Content Include="Template\Instructions.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Template\EyeXBehaviors\" />
-    <Folder Include="Template\Instruments\" />
-    <Folder Include="Template\KeyboardBehaviors\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

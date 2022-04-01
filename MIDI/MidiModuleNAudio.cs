@@ -29,21 +29,25 @@ namespace NeeqDMIs.MIDI
 
         public void PlayNote(int pitch, int velocity)
         {
+            if(midiOut!=null)
             midiOut.Send(MidiMessage.StartNote(pitch, velocity, MidiChannel).RawData);
         }
 
         public void SendMessage(int byte1, int byte2, int byte3)
         {
+            if(midiOut!=null)
             midiOut.Send(MidiMessage.ChangeControl(byte1, byte2, midiChannel).RawData);
         }
 
         public void SetExpression(int expression)
         {
+            if(midiOut!=null)
             midiOut.Send(MidiMessage.ChangeControl(11, expression, midiChannel).RawData);
         }
 
         public void SetModulation(int modulation)
         {
+            if(midiOut!=null)
             midiOut.Send(MidiMessage.ChangeControl(1, modulation, midiChannel).RawData);
         }
 
@@ -60,21 +64,25 @@ namespace NeeqDMIs.MIDI
             int status = 0b1110 << 4;
 
             MidiMessage message = new MidiMessage(status, lsb, msb);
+            if(midiOut!=null)
             midiOut.Send(message.RawData);
         }
 
         public void SetPitchNoBend()
         {
+            if(midiOut!=null)
             SetPitchBend(8192);
         }
 
         public void SetPressure(int pressure)
         {
+            if(midiOut!=null)
             midiOut.Send(MidiMessage.ChangeControl(7, pressure, midiChannel).RawData);
         }
 
         public void StopNote(int pitch)
         {
+            if(midiOut!=null)
             midiOut.Send(MidiMessage.StopNote(pitch, 0, MidiChannel).RawData);
         }
 

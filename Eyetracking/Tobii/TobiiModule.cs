@@ -1,5 +1,5 @@
-﻿using NeeqDMIs.Eyetracking.PointFilters;
-using NeeqDMIs.Eyetracking.Utils;
+﻿using NeeqDMIs.Eyetracking.MouseEmulator;
+using NeeqDMIs.Eyetracking.PointFilters;
 using System.Collections.Generic;
 using Tobii.Interaction;
 using Tobii.Interaction.Framework;
@@ -11,7 +11,7 @@ namespace NeeqDMIs.Eyetracking.Tobii
         private TobiiBlinkProcessor blinkProcessor;
         public TobiiBlinkProcessor BlinkProcessor { get => blinkProcessor; set => blinkProcessor = value; }
 
-        public MouseEmulator MouseEmulator { get; set; }
+        public MouseEmulatorModule MouseEmulator { get; set; }
 
 
 
@@ -59,7 +59,7 @@ namespace NeeqDMIs.Eyetracking.Tobii
             headPoseStream.Next += HeadPoseStreamNext;
 
             BlinkProcessor = new TobiiBlinkProcessor(this);
-            MouseEmulator = new MouseEmulator(new PointFilterBypass());
+            MouseEmulator = new MouseEmulatorModule(new PointFilterBypass());
         }
 
         private void HeadPoseStreamNext(object sender, StreamData<HeadPoseData> e)

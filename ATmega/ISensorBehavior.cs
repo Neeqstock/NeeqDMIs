@@ -1,6 +1,6 @@
 ﻿namespace NeeqDMIs.ATmega
 {
-    public interface ISensorReaderBehavior
+    public interface ISensorBehavior
     {
         void ReceiveSensorRead(string v);
     }

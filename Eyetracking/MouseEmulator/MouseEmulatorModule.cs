@@ -2,21 +2,21 @@
 using NeeqDMIs.Mouse;
 using System.Drawing;
 
-namespace NeeqDMIs.Eyetracking.Utils
+namespace NeeqDMIs.Eyetracking.MouseEmulator
 {
-    public class MouseEmulator
+    public class MouseEmulatorModule
     {
         private IPointFilter filter;
-        public IPointFilter Filter { get => filter; set => filter = value; }
         private Point currentGazePoint = new Point();
-
         private bool eyetrackerToMouse = false;
         private bool cursorVisible = true;
 
-        public MouseEmulator(IPointFilter filter)
+        public MouseEmulatorModule(IPointFilter filter)
         {
-            this.Filter = filter;
+            Filter = filter;
         }
+
+        public IPointFilter Filter { get => filter; set => filter = value; }
 
         public bool EyetrackerToMouse
         {
@@ -30,7 +30,7 @@ namespace NeeqDMIs.Eyetracking.Utils
             set
             {
                 cursorVisible = value;
-               MouseFunctions.ShowCursor(cursorVisible);
+                MouseFunctions.ShowCursor(cursorVisible);
             }
         }
 
