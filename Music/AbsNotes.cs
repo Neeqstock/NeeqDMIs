@@ -18,7 +18,8 @@ namespace NeeqDMIs.Music
         sG,
         A,
         sA,
-        B
+        B,
+        NaN
     }
 
     public static class AbsNotesMethods

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-
-namespace NeeqDMIs.Utils.ValueFilters
+﻿namespace NeeqDMIs.Filters.ValueFilters
 {
     public class DoubleFilterMAExpDecaying : IDoubleFilter
     {
@@ -21,7 +18,7 @@ namespace NeeqDMIs.Utils.ValueFilters
         public void Push(double val)
         {
             valI = valIplusOne;
-            valIplusOne = (alpha * val) + ((1 - alpha) * valI);
+            valIplusOne = alpha * val + (1 - alpha) * valI;
         }
 
         public double Pull()

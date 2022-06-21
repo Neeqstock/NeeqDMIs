@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-
-namespace NeeqDMIs.Utils.ValueFilters
+﻿namespace NeeqDMIs.Filters.ValueFilters
 {
     public class LongFilterMAExpDecaying : ILongFilter
     {
@@ -21,7 +18,7 @@ namespace NeeqDMIs.Utils.ValueFilters
         public void Push(long val)
         {
             valI = valIplusOne;
-            valIplusOne = (long)(alpha * (double)val) + ((1 - alpha) * valI);
+            valIplusOne = (long)(alpha * (double)val) + (1 - alpha) * valI;
         }
 
         public long Pull()

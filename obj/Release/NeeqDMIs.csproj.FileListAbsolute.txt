@@ -56,8 +56,8 @@ C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\RJCP.SerialPortStr
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\RJCP.SerialPortStream.xml
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\System.Security.AccessControl.xml
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\System.Security.Principal.Windows.xml
+C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\obj\Release\NeeqDMIs.csproj.AssemblyReference.cache
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\obj\Release\NeeqDMIs.csproj.CoreCompileInputs.cache
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\obj\Release\NeeqDMIs.csproj.CopyComplete
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\obj\Release\NeeqDMIs.dll
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\obj\Release\NeeqDMIs.pdb
-C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\obj\Release\NeeqDMIs.csproj.AssemblyReference.cache

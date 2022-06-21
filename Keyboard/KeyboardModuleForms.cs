@@ -5,13 +5,13 @@ using System.Windows.Interop;
 
 namespace NeeqDMIs.Keyboard
 {
-    public sealed class KeyboardModule
+    public class KeyboardModuleForms
     {
-        private RawPresentationInput _rawinput;
+        private RawFormsInput _rawinput;
 
-        public KeyboardModule(IntPtr parentHandle)
+        public KeyboardModuleForms(IntPtr parentHandle)
         {
-            _rawinput = new RawPresentationInput(HwndSource.FromHwnd(parentHandle), RawInputCaptureMode.Foreground);
+            _rawinput = new RawFormsInput(parentHandle, RawInputCaptureMode.ForegroundAndBackground);
 
             _rawinput.AddMessageFilter();
 

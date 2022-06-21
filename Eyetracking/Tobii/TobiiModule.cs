@@ -46,7 +46,7 @@ namespace NeeqDMIs.Eyetracking.Tobii
 
         #endregion
 
-        public TobiiModule(GazePointDataMode gazePointDataMode)
+        public TobiiModule(GazePointDataMode gazePointDataMode = GazePointDataMode.Unfiltered)
         {
             TobiiHost = new Host();
 

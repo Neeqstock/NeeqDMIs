@@ -30,7 +30,7 @@ namespace NeeqDMIs.Mouse
         /// </summary>
         /// <see>See MSDN documentation for further information.</see>
         [DllImport("user32.dll")]
-        public static extern bool GetCursorPos(out POINT lpPoint);
+        private static extern bool GetCursorPos(out POINT lpPoint);
 
         private static POINT lpPoint;
         public static Point GetCursorPosition()
