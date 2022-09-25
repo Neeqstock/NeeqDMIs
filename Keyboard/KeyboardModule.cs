@@ -9,9 +9,9 @@ namespace NeeqDMIs.Keyboard
     {
         private RawPresentationInput _rawinput;
 
-        public KeyboardModule(IntPtr parentHandle)
+        public KeyboardModule(IntPtr parentHandle, RawInputCaptureMode captureMode)
         {
-            _rawinput = new RawPresentationInput(HwndSource.FromHwnd(parentHandle), RawInputCaptureMode.Foreground);
+            _rawinput = new RawPresentationInput(HwndSource.FromHwnd(parentHandle), captureMode);
 
             _rawinput.AddMessageFilter();
 
