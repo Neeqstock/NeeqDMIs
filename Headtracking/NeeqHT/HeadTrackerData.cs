@@ -5,15 +5,20 @@ namespace NeeqDMIs.Headtracking.NeeqHT
 {
     public class HeadTrackerData
     {
+        public HeadTrackerMode HeadTrackerMode { get; set; } = HeadTrackerMode.Absolute;
+
         private AngleBaseChanger pitchTransf;
         private AngleBaseChanger yawTransf;
         private AngleBaseChanger rollTransf;
-        public double Pitch { get; set; }
-        public double Yaw { get; set; }
-        public double Roll { get; set; }
-        public double TranspPitch { get { return pitchTransf.Transform(Pitch); } }
-        public double TranspYaw { get { return yawTransf.Transform(Yaw); } }
-        public double TranspRoll { get { return rollTransf.Transform(Roll); } }
+        public double PosPitch { get; set; }
+        public double PosYaw { get; set; }
+        public double PosRoll { get; set; }
+        public double AccPitch { get; set; }
+        public double AccYaw { get; set; }
+        public double AccRoll { get; set; }
+        public double TranspPitch { get { return pitchTransf.Transform(PosPitch); } }
+        public double TranspYaw { get { return yawTransf.Transform(PosYaw); } }
+        public double TranspRoll { get { return rollTransf.Transform(PosRoll); } }
         public double Velocity { get; set; }
 
         public HeadTrackerData()
@@ -30,25 +35,31 @@ namespace NeeqDMIs.Headtracking.NeeqHT
 
         public void CalibrateCenter()
         {
-            pitchTransf.Delta = Pitch;
-            yawTransf.Delta = Yaw;
-            rollTransf.Delta = Roll;
+            pitchTransf.Delta = PosPitch;
+            yawTransf.Delta = PosYaw;
+            rollTransf.Delta = PosRoll;
             //MessageBox.Show(yawTransf.Delta.ToString(CultureInfo.InvariantCulture) + "\n" + yawTransf.getDeltaBar());
         }
 
         public void SetPitchDelta()
         {
-            pitchTransf.Delta = Pitch;
+            pitchTransf.Delta = PosPitch;
         }
 
         public void SetYawDelta()
         {
-            yawTransf.Delta = Yaw;
+            yawTransf.Delta = PosYaw;
         }
 
         public void SetRollDelta()
         {
-            rollTransf.Delta = Roll;
+            rollTransf.Delta = PosRoll;
         }
+    }
+    
+    public enum HeadTrackerMode
+    {
+        Absolute,
+        Acceleration
     }
 }

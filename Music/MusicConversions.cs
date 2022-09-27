@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace NeeqDMIs.Music
 {
-    public static class MidiNotesUtils
+    public static class MusicConversions
     {
         public static List<MidiNotes> GetAllMidiNotesList()
         {
             return Enum.GetValues(typeof(MidiNotes)).Cast<MidiNotes>().ToList();
         }
 
-        public static AbsNotes StandardStringToAbsNote(string str)
+        public static AbsNotes ToAbsNote(string str)
         {
             if (str.Contains("#"))
             {
@@ -20,6 +20,12 @@ namespace NeeqDMIs.Music
             }
 
             var ret = (AbsNotes)Enum.Parse(typeof(AbsNotes), str, true);
+            return ret;
+        }
+
+        public static ScaleCodes ToScaleCode(string scalecode)
+        {
+            var ret = (ScaleCodes)Enum.Parse(typeof(ScaleCodes), scalecode, true);
             return ret;
         }
     }
