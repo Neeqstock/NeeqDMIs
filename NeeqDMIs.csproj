@@ -216,7 +216,7 @@
     <Compile Include="Mouse\MouseModule.cs" />
     <Compile Include="Music\AbsNotes.cs" />
     <Compile Include="Music\MidiNotes.cs" />
-    <Compile Include="Music\MidiNotesUtils.cs" />
+    <Compile Include="Music\MusicConversions.cs" />
     <Compile Include="Music\PitchUtils.cs" />
     <Compile Include="Music\Scale.cs" />
     <Compile Include="Music\ScaleCodes.cs" />
