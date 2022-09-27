@@ -9,10 +9,11 @@ namespace NeeqDMIs.Music
     {
         min,
         maj,
-        chrom
+        chrom,
+        NaN
     }
 
-    static class ScaleCodesMethods
+    public static class ScaleCodesMethods
     {
         /// <summary>
         /// Returns the scale rule, in relative pitch positions.

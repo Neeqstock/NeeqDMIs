@@ -22,7 +22,7 @@ namespace NeeqDMIs.Music
         NaN
     }
 
-    static class AbsNotesMethods
+    public static class AbsNotesMethods
     {
         public static bool IsSharp(this AbsNotes note)
         {
