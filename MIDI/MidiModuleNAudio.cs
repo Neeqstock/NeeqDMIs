@@ -1,4 +1,5 @@
 ﻿using NAudio.Midi;
+using System.Windows.Forms;
 
 namespace NeeqDMIs.MIDI
 {
@@ -18,6 +19,7 @@ namespace NeeqDMIs.MIDI
         {
             this.outDevice = outDevice;
             this.midiChannel = midiChannel;
+
 
             ResetMidiOut();
         }
@@ -88,6 +90,11 @@ namespace NeeqDMIs.MIDI
 
         private void ResetMidiOut()
         {
+            if(midiOut != null)
+            {
+                midiOut.Close();
+                midiOut.Dispose();
+            }
             try
             {
                 midiOut = new MidiOut(this.OutDevice);
@@ -98,10 +105,5 @@ namespace NeeqDMIs.MIDI
                 midiOk = false;
             }
         }
-
-        /*
-         * 0 - 16383
-         * 8192
-         */
     }
 }
