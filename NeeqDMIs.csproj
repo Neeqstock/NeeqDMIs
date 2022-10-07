@@ -176,8 +176,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ATmega\SensorBase.cs" />
+    <Compile Include="Nith\NithData.cs" />
+    <Compile Include="Nith\NithFields.cs" />
+    <Compile Include="Nith\INithBehavior.cs" />
+    <Compile Include="Nith\NithSensorNames.cs" />
+    <Compile Include="Nith\NithStatusCodes.cs" />
+    <Compile Include="Nith\NithModule.cs" />
     <Compile Include="ATmega\ISensorBehavior.cs" />
     <Compile Include="ATmega\SensorModule.cs" />
+    <Compile Include="Nith\NithParsers.cs" />
     <Compile Include="DMIBox.cs" />
     <Compile Include="Eyetracking\Eyetribe\EyeTribeModule.cs" />
     <Compile Include="Eyetracking\Eyetribe\IEyeTribeGazePointBehavior.cs" />
@@ -251,7 +259,9 @@
     <Content Include="Libraries\XInputInterface.dll" />
     <Content Include="Template\Instructions.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Headtracking\NithHT\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
