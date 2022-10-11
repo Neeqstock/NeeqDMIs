@@ -9,8 +9,9 @@ namespace NeeqDMIs.Headtracking.NeeqHT
         {
             base.Behaviors.Add(new SBneeqHTBehavior(this));
         }
+                public NeeqHTModes HeadTrackerMode { get; set; } = NeeqHTModes.Absolute;
 
-        public HeadTrackerData Data { get; set; } = new HeadTrackerData();
+        public NeeqHTData Data { get; set; } = new NeeqHTData();
 
         public new List<INeeqHTbehavior> Behaviors { get; set; } = new List<INeeqHTbehavior>();
     }

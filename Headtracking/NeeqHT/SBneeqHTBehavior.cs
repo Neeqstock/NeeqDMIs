@@ -21,25 +21,32 @@ namespace NeeqDMIs.Headtracking.NeeqHT
             }
             else if (val.StartsWith("$"))
             {
-                module.Data.HeadTrackerMode = HeadTrackerMode.Absolute;
+                module.HeadTrackerMode = NeeqHTModes.Absolute;
 
                 val = val.Replace("$", string.Empty);
                 split = val.Split('!');
 
-                module.Data.PosYaw = double.Parse(split[0], CultureInfo.InvariantCulture);
-                module.Data.PosRoll = double.Parse(split[1], CultureInfo.InvariantCulture);
-                module.Data.PosPitch = double.Parse(split[2], CultureInfo.InvariantCulture);
+                module.Data.Position = new Polar3DData 
+                {
+                    Yaw = double.Parse(split[0], CultureInfo.InvariantCulture), 
+                    Roll = double.Parse(split[1], CultureInfo.InvariantCulture), 
+                    Pitch = double.Parse(split[2], CultureInfo.InvariantCulture) 
+                };
             }
             else if (val.StartsWith("R"))
             {
-                module.Data.HeadTrackerMode = HeadTrackerMode.Acceleration;
+                module.HeadTrackerMode = NeeqHTModes.Acceleration;
 
                 val = val.Replace("R", string.Empty);
                 split = val.Split('!');
 
-                module.Data.AccPitch = double.Parse(split[0], CultureInfo.InvariantCulture);
-                module.Data.AccRoll = double.Parse(split[1], CultureInfo.InvariantCulture);
-                module.Data.AccYaw = double.Parse(split[2], CultureInfo.InvariantCulture);
+                module.Data.Acceleration = new Polar3DData
+                {
+                    Pitch = double.Parse(split[0], CultureInfo.InvariantCulture),
+                    Roll = double.Parse(split[1], CultureInfo.InvariantCulture),
+                    Yaw = double.Parse(split[2], CultureInfo.InvariantCulture)
+                };
+                
             }
 
             foreach (INeeqHTbehavior b in module.Behaviors)

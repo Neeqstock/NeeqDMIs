@@ -18,12 +18,12 @@ namespace NeeqDMIs.Nith
             return ret;
         }
 
-        public static NithFields ParseField(string field)
+        public static NithArguments ParseField(string field)
         {
-            NithFields ret = NithFields.NaF;
+            NithArguments ret = NithArguments.NaF;
             try
             {
-                ret = (NithFields)Enum.Parse(typeof(NithFields), field);
+                ret = (NithArguments)Enum.Parse(typeof(NithArguments), field);
             }
             catch
             {

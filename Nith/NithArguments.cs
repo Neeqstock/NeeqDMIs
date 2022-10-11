@@ -1,6 +1,6 @@
 ﻿namespace NeeqDMIs.Nith
 {
-    public enum NithFields
+    public enum NithArguments
     {
         abs_yaw,
         abs_pitch,

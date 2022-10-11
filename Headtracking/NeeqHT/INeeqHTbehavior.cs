@@ -2,6 +2,6 @@
 {
     public interface INeeqHTbehavior
     {
-        void ReceiveHeadTrackerData(HeadTrackerData headTrackerData);
+        void ReceiveHeadTrackerData(NeeqHTData headTrackerData);
     }
 }

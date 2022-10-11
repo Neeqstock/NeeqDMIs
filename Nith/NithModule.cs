@@ -9,69 +9,117 @@ namespace NeeqDMIs.Nith
     /// </summary>
     public class NithModule : SensorBase
     {
-        public bool IsSensorValid { get; private set; } = false;
-        public NithData LastNithData { get; protected set; }
-        public List<INithBehavior> Behaviors { get; protected set; }
-        public NithSensorNames ExpectedSensor { get; set; }
-        public string ExpectedVersion { get; set; }
+        public NithErrors LastError { get; protected set; }
+        public NithSensorData LastSensorData { get; protected set; }
+        public List<INithSensorBehavior> SensorBehaviors { get; protected set; }
+        public List<INithErrorBehavior> ErrorBehaviors { get; protected set; }
+        public List<NithSensorNames> ExpectedSensorNames { get; set; } = new List<NithSensorNames>();
+        public List<string> ExpectedVersions { get; set; } = new List<string>();
+        public List<NithArguments> ExpectedArguments { get; set; } = new List<NithArguments>();
         
         /// <summary>
         /// Initializes a Nith sensor module.
         /// </summary>
-        /// <param name="expectedSensor">Indicates which sensor this module will accept data from, skipping all the other incoming data. Use "NaS" enum value if you want this module to accept any data from any sensor.</param>
-        /// <param name="expectedVersion">Indicates which sensor version this module will accept data from, skipping all the other incoming data. Leave null if you want this module to accept any data from any sensor.</param>
-        public NithModule(NithSensorNames expectedSensor, string expectedVersion) : base(115200, "COM")
+        public NithModule() : base(115200, "COM")
         {
-            Behaviors = new List<INithBehavior>();
+            SensorBehaviors = new List<INithSensorBehavior>();
+            ErrorBehaviors = new List<INithErrorBehavior>();
+            LastSensorData = new NithSensorData();
+            LastError = NithErrors.NaE;
         }
 
         protected override void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            try
+            LastSensorData.Reset();
+            LastError = NithErrors.NaE;
+
+            if (IsConnectionOk)
             {
-                LastNithData = new NithData();
-
-                string[] fields = serialPort.ReadLine().Split('|');
-
-                string[] first = fields[0].Split('-');
-
-                LastNithData.SensorName = NithParsers.ParseSensorName(first[0]);
-                LastNithData.Version = first[1];
-
-                // Check if sensor name and version were specified
-                if ((ExpectedSensor == LastNithData.SensorName || ExpectedSensor == NithSensorNames.NaS) && (ExpectedVersion == LastNithData.Version || ExpectedVersion == null))
+                try
                 {
-                    LastNithData.StatusCode = NithParsers.ParseStatusCode(fields[1]);
+                    // Output splitting
+                    string[] fields = serialPort.ReadLine().Split('|');
+                    string[] firstField = fields[0].Split('-');
+                    string[] arguments = fields[2].Split('&');
 
-                    LastNithData.Values.Clear();
-
-                    string[] ands = fields[2].Split('&');
-
-                    foreach (string v in ands)
+                    // Parsings
+                    LastSensorData.SensorName = NithParsers.ParseSensorName(firstField[0]);
+                    LastSensorData.Version = firstField[1];
+                    LastSensorData.StatusCode = NithParsers.ParseStatusCode(fields[1]);
+                    foreach (string v in arguments)
                     {
                         string[] s = v.Split(']');
-                        string fieldName = s[0].Remove(0, 1);
+                        string argumentName = s[0].Remove(0, 1);
                         string value = s[1];
-                        LastNithData.Values.Add(NithParsers.ParseField(fieldName), value);
+                        LastSensorData.Values.Add(NithParsers.ParseField(argumentName), value);
                     }
 
-                    foreach (INithBehavior behavior in Behaviors)
+                    // Further error checking
+                    // Check name
+                    if (ExpectedSensorNames.Contains(LastSensorData.SensorName) || ExpectedSensorNames.Count == 0)
                     {
-                        behavior.ReceiveData(LastNithData);
+                        // Check version
+                        if (ExpectedVersions.Contains(LastSensorData.Version) || ExpectedVersions.Count == 0)
+                        {
+                            // Check status code
+                            if (LastSensorData.StatusCode != NithStatusCodes.ERR)
+                            {
+                                // Check arguments
+                                if(ExpectedArguments.Count != 0)
+                                {
+                                    foreach (NithArguments arg in ExpectedArguments)
+                                    {
+                                        if (!LastSensorData.Values.ContainsKey(arg))
+                                        {
+                                            LastError = NithErrors.Values;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                LastError = NithErrors.StatusCode;
+                            }
+                        }
+                        else
+                        {
+                            LastError = NithErrors.Version;
+                        }
                     }
-
-                    IsSensorValid = true;
+                    else
+                    {
+                        LastError = NithErrors.Name;
+                    }
                 }
-                else
+                catch
                 {
-                    IsSensorValid = false;
+                    LastError = NithErrors.OutputCompliance;
                 }
             }
-            catch
+            else
             {
-                IsSensorValid = false;
+                LastError = NithErrors.Connection;
             }
-            
+
+            // Checks and parsing done! Send to behaviors
+            if(LastError == NithErrors.NaE)         
+            {
+                // No errors, send to sensor behaviors
+                foreach(INithSensorBehavior sbeh in SensorBehaviors)
+                {
+                    sbeh.HandleData(LastSensorData);
+                }
+            }
+            else                                    
+            {
+                // Errors, send to error behaviors
+                foreach(INithErrorBehavior ebeh in ErrorBehaviors)
+                {
+                    ebeh.HandleError(LastError);
+                }
+            }
         }
+            
     }
 }

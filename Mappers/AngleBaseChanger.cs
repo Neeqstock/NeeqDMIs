@@ -1,4 +1,4 @@
-﻿namespace NeeqDMIs.Utils
+﻿namespace NeeqDMIs.Mappers
 {
     /// <summary>
     /// Does your gyroscope or whatever return you angles in [-180; +180] format, and you want to move the center wherever you desire?
@@ -29,11 +29,6 @@
             }
         }
 
-        public double getDeltaBar() //DEBUG PURPOSES
-        {
-            return deltaBar;
-        }
-
         /// <summary>
         /// Converts a sensor read into the new base defined by delta.
         /// </summary>
@@ -45,7 +40,7 @@
             double res = 0;
             if (delta >= 0)
             {
-                if(angle > deltaBar)
+                if (angle > deltaBar)
                 {
                     res = angle - delta;
                 }
@@ -56,7 +51,7 @@
             }
             else if (delta < 0)
             {
-                if(angle < deltaBar)
+                if (angle < deltaBar)
                 {
                     res = angle - delta;
                 }
