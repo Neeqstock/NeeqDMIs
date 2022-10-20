@@ -1,4 +1,5 @@
 ﻿using NeeqDMIs.ATmega;
+using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 
@@ -9,14 +10,6 @@ namespace NeeqDMIs.Nith
     /// </summary>
     public class NithModule : SensorBase
     {
-        public NithErrors LastError { get; protected set; }
-        public NithSensorData LastSensorData { get; protected set; }
-        public List<INithSensorBehavior> SensorBehaviors { get; protected set; }
-        public List<INithErrorBehavior> ErrorBehaviors { get; protected set; }
-        public List<NithSensorNames> ExpectedSensorNames { get; set; } = new List<NithSensorNames>();
-        public List<string> ExpectedVersions { get; set; } = new List<string>();
-        public List<NithArguments> ExpectedArguments { get; set; } = new List<NithArguments>();
-        
         /// <summary>
         /// Initializes a Nith sensor module.
         /// </summary>
@@ -28,50 +21,72 @@ namespace NeeqDMIs.Nith
             LastError = NithErrors.NaE;
         }
 
+        public NithErrors LastError { get; protected set; }
+        public NithSensorData LastSensorData { get; protected set; }
+        public List<INithSensorBehavior> SensorBehaviors { get; protected set; }
+        public List<INithErrorBehavior> ErrorBehaviors { get; protected set; }
+        public List<NithSensorNames> ExpectedSensorNames { get; set; } = new List<NithSensorNames>();
+        public List<string> ExpectedVersions { get; set; } = new List<string>();
+        public List<NithArguments> ExpectedArguments { get; set; } = new List<NithArguments>();
+
         protected override void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            LastSensorData.Reset();
-            LastError = NithErrors.NaE;
+            NithSensorData data = new NithSensorData();
+            NithErrors error = NithErrors.NaE;
 
             if (IsConnectionOk)
             {
-                try
-                {
-                    // Output splitting
-                    string[] fields = serialPort.ReadLine().Split('|');
-                    string[] firstField = fields[0].Split('-');
-                    string[] arguments = fields[2].Split('&');
+                string line = serialPort.ReadLine();
 
-                    // Parsings
-                    LastSensorData.SensorName = NithParsers.ParseSensorName(firstField[0]);
-                    LastSensorData.Version = firstField[1];
-                    LastSensorData.StatusCode = NithParsers.ParseStatusCode(fields[1]);
-                    foreach (string v in arguments)
+                if (line.StartsWith("$"))
+                {
+                    error = NithErrors.OK; // Set to ok, then check if wrong
+                    try
                     {
-                        string[] s = v.Split(']');
-                        string argumentName = s[0].Remove(0, 1);
-                        string value = s[1];
-                        LastSensorData.Values.Add(NithParsers.ParseField(argumentName), value);
+                        // Output splitting
+                        string[] fields = line.Split('|');
+                        string[] firstField = fields[0].Split('-');
+                        string[] arguments = fields[2].Split('&');
+
+                        // Parsings
+                        data.RawLine = line;
+                        data.SensorName = NithParsers.ParseSensorName(firstField[0]);
+                        data.Version = firstField[1];
+                        data.StatusCode = NithParsers.ParseStatusCode(fields[1]);
+                        foreach (string v in arguments)
+                        {
+                            string[] s = v.Split('=');
+                            string argumentName = s[0];
+                            string value = s[1];
+                            data.Values.Add(NithParsers.ParseField(argumentName), value);
+                        }
+                    }
+                    catch
+                    {
+                        error = NithErrors.OutputCompliance;
                     }
 
                     // Further error checking
+                    
                     // Check name
-                    if (ExpectedSensorNames.Contains(LastSensorData.SensorName) || ExpectedSensorNames.Count == 0)
+                    if (ExpectedSensorNames.Contains(data.SensorName) || ExpectedSensorNames.Count == 0)
                     {
                         // Check version
-                        if (ExpectedVersions.Contains(LastSensorData.Version) || ExpectedVersions.Count == 0)
+                        if (ExpectedVersions.Contains(data.Version) || ExpectedVersions.Count == 0)
                         {
                             // Check status code
-                            if (LastSensorData.StatusCode != NithStatusCodes.ERR)
+                            if (data.StatusCode != NithStatusCodes.ERR)
                             {
+                                
                                 // Check arguments
-                                if(ExpectedArguments.Count != 0)
+                                if (ExpectedArguments.Count != 0)
                                 {
+                                    
                                     foreach (NithArguments arg in ExpectedArguments)
                                     {
-                                        if (!LastSensorData.Values.ContainsKey(arg))
+                                        if (!data.Values.ContainsKey(arg))
                                         {
-                                            LastError = NithErrors.Values;
+                                            error = NithErrors.Values;
                                             break;
                                         }
                                     }
@@ -79,47 +94,43 @@ namespace NeeqDMIs.Nith
                             }
                             else
                             {
-                                LastError = NithErrors.StatusCode;
+                                error = NithErrors.StatusCode;
                             }
                         }
                         else
                         {
-                            LastError = NithErrors.Version;
+                            error = NithErrors.Version;
                         }
                     }
                     else
                     {
-                        LastError = NithErrors.Name;
+                        error = NithErrors.Name;
                     }
                 }
-                catch
+                else
                 {
-                    LastError = NithErrors.OutputCompliance;
+                    error = NithErrors.OutputCompliance;
                 }
             }
             else
             {
-                LastError = NithErrors.Connection;
+                error = NithErrors.Connection;
             }
 
-            // Checks and parsing done! Send to behaviors
-            if(LastError == NithErrors.NaE)         
+            // Checks and parsing done! Send to sensorbehaviors
+            foreach (INithSensorBehavior sbeh in SensorBehaviors)
             {
-                // No errors, send to sensor behaviors
-                foreach(INithSensorBehavior sbeh in SensorBehaviors)
-                {
-                    sbeh.HandleData(LastSensorData);
-                }
+                sbeh.HandleData(data);
             }
-            else                                    
+
+            // Send to errorbehaviors
+            foreach (INithErrorBehavior ebeh in ErrorBehaviors)
             {
-                // Errors, send to error behaviors
-                foreach(INithErrorBehavior ebeh in ErrorBehaviors)
-                {
-                    ebeh.HandleError(LastError);
-                }
+                ebeh.HandleError(error);
             }
+
+            LastSensorData = data;
+            LastError = error;
         }
-            
     }
 }

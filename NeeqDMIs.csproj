@@ -181,7 +181,7 @@
     <Compile Include="Headtracking\NithHT\ANithHTBehavior.cs" />
     <Compile Include="Headtracking\Polar3DData.cs" />
     <Compile Include="Headtracking\NeeqHT\NeeqHTModes.cs" />
-    <Compile Include="Nith\DefaultErrorBehavior.cs" />
+    <Compile Include="Nith\ANithErrorStringBehavior.cs" />
     <Compile Include="Nith\INithErrorBehavior.cs" />
     <Compile Include="Nith\NithErrorData.cs" />
     <Compile Include="Nith\NithSensorData.cs" />

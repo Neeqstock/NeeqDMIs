@@ -4,6 +4,7 @@ namespace NeeqDMIs.Nith
 {
     public class NithSensorData
     {
+        public string RawLine { get; set; } = string.Empty;
         public NithSensorNames SensorName { get; set; }
         public string Version { get; set; }
         public NithStatusCodes StatusCode { get; set; }
@@ -22,6 +23,12 @@ namespace NeeqDMIs.Nith
             Version = "";
             StatusCode = NithStatusCodes.NaC;
             Values.Clear();
+        }
+        public string GetValue(NithArguments argument)
+        {
+            string ret = "";
+            Values.TryGetValue(argument, out ret);
+            return ret;
         }
     }
 }

@@ -6,6 +6,6 @@
         ERR,    // Error (generic)
         NCA,    // Need calibration
         ICA,    // In calibration
-        NaC     // Not a valid code
+        NaC     // Not a status code
     }
 }
