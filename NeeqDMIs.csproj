@@ -177,7 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ATmega\SensorBase.cs" />
-    <Compile Include="Headtracking\NeeqHTData.cs" />
+    <Compile Include="Headtracking\HTCenteringHelper.cs" />
     <Compile Include="Headtracking\NithHT\ANithHTBehavior.cs" />
     <Compile Include="Headtracking\Polar3DData.cs" />
     <Compile Include="Headtracking\NeeqHT\NeeqHTModes.cs" />
@@ -193,7 +193,6 @@
     <Compile Include="ATmega\ISensorBehavior.cs" />
     <Compile Include="ATmega\SensorModule.cs" />
     <Compile Include="Nith\NithParsers.cs" />
-    <Compile Include="DMIBox.cs" />
     <Compile Include="Eyetracking\Eyetribe\EyeTribeModule.cs" />
     <Compile Include="Eyetracking\Eyetribe\IEyeTribeGazePointBehavior.cs" />
     <Compile Include="Filters\PointFilters\PointFilterMAExpDecaying.cs" />
