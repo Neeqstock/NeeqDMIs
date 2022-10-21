@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NeeqDMIs.Nith
+namespace NeeqDMIs.NithSensors
 {
     public abstract class ANithErrorStringBehavior : INithErrorBehavior
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NeeqDMIs.Nith
+namespace NeeqDMIs.NithSensors
 {
     internal static class NithParsers
     {

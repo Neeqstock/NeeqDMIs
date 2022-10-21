@@ -1,4 +1,4 @@
-﻿using NeeqDMIs.Nith;
+﻿using NeeqDMIs.NithSensors;
 
 namespace NeeqDMIs.Headtracking.NithHT
 {

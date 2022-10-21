@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 
-namespace NeeqDMIs.Nith
+namespace NeeqDMIs.NithSensors
 {
     /// <summary>
     /// A module capable to handle any NITH sensor

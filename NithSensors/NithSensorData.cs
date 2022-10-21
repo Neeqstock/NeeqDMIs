@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NeeqDMIs.Nith
+namespace NeeqDMIs.NithSensors
 {
     public class NithSensorData
     {

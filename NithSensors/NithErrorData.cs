@@ -1,4 +1,4 @@
-﻿namespace NeeqDMIs.Nith
+﻿namespace NeeqDMIs.NithSensors
 {
     public class NithErrorData
     {
