@@ -2,7 +2,7 @@
 
 namespace NeeqDMIs.Headtracking.NeeqHT
 {
-    public class HTCenteringHelper
+    public class HeadtrackerCenteringHelper
     {
         private AngleBaseChanger pitchBaseChanger;
         private AngleBaseChanger yawBaseChanger;
@@ -13,12 +13,12 @@ namespace NeeqDMIs.Headtracking.NeeqHT
         {
             get
             {
-                return new Polar3DData { Yaw = yawBaseChanger.Transform(Position.Yaw), Pitch = pitchBaseChanger.Transform(Position.Pitch), Roll = yawBaseChanger.Transform(Position.Roll) };
+                return new Polar3DData { Yaw = yawBaseChanger.Transform(Position.Yaw), Pitch = pitchBaseChanger.Transform(Position.Pitch), Roll = rollBaseChanger.Transform(Position.Roll) };
             }
         }
         public double Velocity { get; set; }
 
-        public HTCenteringHelper()
+        public HeadtrackerCenteringHelper()
         {
             pitchBaseChanger = new AngleBaseChanger();
             yawBaseChanger = new AngleBaseChanger();
@@ -36,7 +36,7 @@ namespace NeeqDMIs.Headtracking.NeeqHT
             };
         }
 
-        public void SetCenter()
+        public void SetCenterToCurrentPosition()
         {
             pitchBaseChanger.Delta = Position.Pitch;
             yawBaseChanger.Delta = Position.Yaw;

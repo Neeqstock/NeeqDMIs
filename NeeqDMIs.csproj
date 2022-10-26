@@ -177,7 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ATmega\SensorBase.cs" />
-    <Compile Include="Headtracking\HTCenteringHelper.cs" />
+    <Compile Include="Headtracking\HeadtrackerCenteringHelper.cs" />
     <Compile Include="Headtracking\NithHT\ANithHTBehavior.cs" />
     <Compile Include="Headtracking\Polar3DData.cs" />
     <Compile Include="Headtracking\NeeqHT\NeeqHTModes.cs" />

@@ -1,7 +1,7 @@
 ﻿namespace NeeqDMIs.Mappers
 {
     /// <summary>
-    /// Does your gyroscope or whatever return you angles in [-180; +180] format, and you want to move the center wherever you desire?
+    /// Does your gyroscope or whatever return you angles in [-180; +180]° or [0; +360]° format, and you want to move the center wherever you desire?
     /// Here I am!
     /// </summary>
     public class AngleBaseChanger
@@ -36,6 +36,17 @@
         /// <returns></returns>
         public double Transform(double angle)
         {
+            // Put angle in [-180;+180] format
+            if (angle >= 180)
+            {
+                angle -= 360;
+            }
+            else if (angle <= -180)
+            {
+                angle += 360;
+            }
+
+            // Transformations
 
             double res = 0;
             if (delta >= 0)
