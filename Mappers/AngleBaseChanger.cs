@@ -30,7 +30,7 @@
         }
 
         /// <summary>
-        /// Converts a sensor read into the new base defined by delta.
+        /// Converts a sensor read into the new base defined by delta. Output will be in [-180; +180]° format.
         /// </summary>
         /// <param name="angle">The angle read by the sensor</param>
         /// <returns></returns>

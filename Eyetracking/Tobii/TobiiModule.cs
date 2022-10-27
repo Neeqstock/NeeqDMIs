@@ -1,12 +1,13 @@
 ﻿using NeeqDMIs.Eyetracking.MouseEmulator;
 using NeeqDMIs.Eyetracking.PointFilters;
+using System;
 using System.Collections.Generic;
 using Tobii.Interaction;
 using Tobii.Interaction.Framework;
 
 namespace NeeqDMIs.Eyetracking.Tobii
 {
-    public class TobiiModule
+    public class TobiiModule : IDisposable
     {
         private TobiiBlinkProcessor blinkProcessor;
         public TobiiBlinkProcessor BlinkProcessor { get => blinkProcessor; set => blinkProcessor = value; }

@@ -177,6 +177,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ATmega\SensorBase.cs" />
+    <Compile Include="Filters\ValueFilters\DoubleFilterBypass.cs" />
+    <Compile Include="Filters\ValueFilters\LongFilterBypass.cs" />
     <Compile Include="Headtracking\HeadtrackerCenteringHelper.cs" />
     <Compile Include="Headtracking\NithHT\ANithHTBehavior.cs" />
     <Compile Include="Headtracking\Polar3DData.cs" />
@@ -209,7 +211,7 @@
     <Compile Include="Eyetracking\Tobii\TobiiModule.cs" />
     <Compile Include="Eyetracking\Common\Eyes.cs" />
     <Compile Include="Eyetracking\Common\EyetrackerModels.cs" />
-    <Compile Include="Eyetracking\MouseEmulator\MouseEmulatorModule.cs" />
+    <Compile Include="Mouse\MouseEmulator\MouseEmulatorModule.cs" />
     <Compile Include="Mouse\MouseModuleModes.cs" />
     <Compile Include="Mouse\MouseModuleSample.cs" />
     <Compile Include="Headtracking\NeeqHT\NeeqHTData.cs" />
@@ -244,7 +246,7 @@
     <Compile Include="Filters\ArrayFilters\IDoubleFilter.cs" />
     <Compile Include="Audio\AudioFormatFft.cs" />
     <Compile Include="Mappers\SegmentMapper.cs" />
-    <Compile Include="Filters\ValueFilters\DoubleFilterMAExpDecaying - Copia.cs" />
+    <Compile Include="Filters\ValueFilters\DoubleFilterMAExpDecaying.cs" />
     <Compile Include="Filters\ValueFilters\IDoubleFilter.cs" />
     <Compile Include="Utils\MicroLibrary.cs" />
     <Compile Include="Filters\ValueFilters\ILongFilter.cs" />

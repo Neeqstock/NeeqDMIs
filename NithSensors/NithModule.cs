@@ -1,5 +1,4 @@
 ﻿using NeeqDMIs.ATmega;
-using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 
@@ -36,80 +35,85 @@ namespace NeeqDMIs.NithSensors
 
             if (IsConnectionOk)
             {
-                string line = serialPort.ReadLine();
-
-                if (line.StartsWith("$"))
+                try
                 {
-                    error = NithErrors.OK; // Set to ok, then check if wrong
-                    try
-                    {
-                        // Output splitting
-                        string[] fields = line.Split('|');
-                        string[] firstField = fields[0].Split('-');
-                        string[] arguments = fields[2].Split('&');
+                    string line = serialPort.ReadLine();
 
-                        // Parsings
-                        data.RawLine = line;
-                        data.SensorName = NithParsers.ParseSensorName(firstField[0]);
-                        data.Version = firstField[1];
-                        data.StatusCode = NithParsers.ParseStatusCode(fields[1]);
-                        foreach (string v in arguments)
-                        {
-                            string[] s = v.Split('=');
-                            string argumentName = s[0];
-                            string value = s[1];
-                            data.Values.Add(NithParsers.ParseField(argumentName), value);
-                        }
-                    }
-                    catch
+                    if (line.StartsWith("$"))
                     {
-                        error = NithErrors.OutputCompliance;
-                    }
+                        error = NithErrors.OK; // Set to ok, then check if wrong
+                        try
+                        {
+                            // Output splitting
+                            string[] fields = line.Split('|');
+                            string[] firstField = fields[0].Split('-');
+                            string[] arguments = fields[2].Split('&');
 
-                    // Further error checking
-                    
-                    // Check name
-                    if (ExpectedSensorNames.Contains(data.SensorName) || ExpectedSensorNames.Count == 0)
-                    {
-                        // Check version
-                        if (ExpectedVersions.Contains(data.Version) || ExpectedVersions.Count == 0)
-                        {
-                            // Check status code
-                            if (data.StatusCode != NithStatusCodes.ERR)
+                            // Parsings
+                            data.RawLine = line;
+                            data.SensorName = NithParsers.ParseSensorName(firstField[0]);
+                            data.Version = firstField[1];
+                            data.StatusCode = NithParsers.ParseStatusCode(fields[1]);
+                            foreach (string v in arguments)
                             {
-                                
-                                // Check arguments
-                                if (ExpectedArguments.Count != 0)
+                                string[] s = v.Split('=');
+                                string argumentName = s[0];
+                                string value = s[1];
+                                data.Values.Add(NithParsers.ParseField(argumentName), value);
+                            }
+                        }
+                        catch
+                        {
+                            error = NithErrors.OutputCompliance;
+                        }
+
+                        // Further error checking
+
+                        // Check name
+                        if (ExpectedSensorNames.Contains(data.SensorName) || ExpectedSensorNames.Count == 0)
+                        {
+                            // Check version
+                            if (ExpectedVersions.Contains(data.Version) || ExpectedVersions.Count == 0)
+                            {
+                                // Check status code
+                                if (data.StatusCode != NithStatusCodes.ERR)
                                 {
-                                    
-                                    foreach (NithArguments arg in ExpectedArguments)
+                                    // Check arguments
+                                    if (ExpectedArguments.Count != 0)
                                     {
-                                        if (!data.Values.ContainsKey(arg))
+                                        foreach (NithArguments arg in ExpectedArguments)
                                         {
-                                            error = NithErrors.Values;
-                                            break;
+                                            if (!data.Values.ContainsKey(arg))
+                                            {
+                                                error = NithErrors.Values;
+                                                break;
+                                            }
                                         }
                                     }
+                                }
+                                else
+                                {
+                                    error = NithErrors.StatusCode;
                                 }
                             }
                             else
                             {
-                                error = NithErrors.StatusCode;
+                                error = NithErrors.Version;
                             }
                         }
                         else
                         {
-                            error = NithErrors.Version;
+                            error = NithErrors.Name;
                         }
                     }
                     else
                     {
-                        error = NithErrors.Name;
+                        error = NithErrors.OutputCompliance;
                     }
                 }
-                else
+                catch
                 {
-                    error = NithErrors.OutputCompliance;
+                    error = NithErrors.Connection;
                 }
             }
             else

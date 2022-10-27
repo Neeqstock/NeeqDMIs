@@ -3,5 +3,6 @@
     public interface ISetup
     {
         void Setup();
+        void Dispose();
     }
 }
