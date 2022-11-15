@@ -40,12 +40,10 @@ C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\System.Security.Pr
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\Tobii.Interaction.Model.dll
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\Tobii.Interaction.Net.dll
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\XInput.Wrapper.dll
-C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\NAudio.xml
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\Newtonsoft.Json.xml
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\NLog.xml
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\RJCP.SerialPortStream.pdb
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\RJCP.SerialPortStream.xml
-C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\bin\Release\System.Security.AccessControl.xml
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\obj\Release\NeeqDMIs.csproj.AssemblyReference.cache
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\obj\Release\NeeqDMIs.csproj.CoreCompileInputs.cache
 C:\Users\neequ\OneDrive\Documenti\GitHub\NeeqDMIs\obj\Release\NeeqDMIs.csproj.CopyComplete

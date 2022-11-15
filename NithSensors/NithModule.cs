@@ -1,6 +1,8 @@
 ﻿using NeeqDMIs.ATmega;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO.Ports;
+using System.Windows.Forms;
 
 namespace NeeqDMIs.NithSensors
 {
@@ -9,6 +11,7 @@ namespace NeeqDMIs.NithSensors
     /// </summary>
     public class NithModule : SensorBase
     {
+        private readonly char[] STARTSYMBOL = new char[] { '$' };
         /// <summary>
         /// Initializes a Nith sensor module.
         /// </summary>
@@ -41,6 +44,7 @@ namespace NeeqDMIs.NithSensors
 
                     if (line.StartsWith("$"))
                     {
+                        string TEST = "";
                         error = NithErrors.OK; // Set to ok, then check if wrong
                         try
                         {
@@ -48,17 +52,31 @@ namespace NeeqDMIs.NithSensors
                             string[] fields = line.Split('|');
                             string[] firstField = fields[0].Split('-');
                             string[] arguments = fields[2].Split('&');
+                            TEST = firstField[0];
 
                             // Parsings
                             data.RawLine = line;
-                            data.SensorName = NithParsers.ParseSensorName(firstField[0]);
+                            data.SensorName = NithParsers.ParseSensorName(firstField[0].Trim(STARTSYMBOL));
                             data.Version = firstField[1];
                             data.StatusCode = NithParsers.ParseStatusCode(fields[1]);
                             foreach (string v in arguments)
                             {
                                 string[] s = v.Split('=');
                                 string argumentName = s[0];
-                                string value = s[1];
+                                string value = "";
+
+                                // Check if there is a "/" for value proportion
+                                if (s[1].Contains("/"))
+                                {
+                                    string[] propString = s[1].Split('/');
+                                    double propVal = double.Parse(propString[0], CultureInfo.InvariantCulture) * 100 / int.Parse(propString[1], CultureInfo.InvariantCulture);
+                                    value = propVal.ToString();
+                                }
+                                else
+                                {
+                                    value = s[1];
+                                }
+                                
                                 data.Values.Add(NithParsers.ParseField(argumentName), value);
                             }
                         }

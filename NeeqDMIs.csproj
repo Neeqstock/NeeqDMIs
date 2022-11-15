@@ -177,6 +177,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ATmega\SensorBase.cs" />
+    <Compile Include="ErrorLogging\LoggingService.cs" />
+    <Compile Include="ErrorLogging\TraceAdder.cs" />
     <Compile Include="Filters\ValueFilters\DoubleFilterBypass.cs" />
     <Compile Include="Filters\ValueFilters\LongFilterBypass.cs" />
     <Compile Include="Headtracking\HeadtrackerCenteringHelper.cs" />
@@ -255,6 +257,7 @@
     <Compile Include="Mappers\ValueMapper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ErrorLogging\Instructions.txt" />
     <Content Include="Instructions.txt" />
     <Content Include="Libraries\IntelHexFormatReader.dll" />
     <Content Include="Libraries\RawInput.dll" />
