@@ -12,8 +12,8 @@ namespace NeeqDMIs.MIDI
         private bool midiOk = false;
         private MidiOut midiOut;
         private int outDevice = 0;
-        public int MidiChannel { get => midiChannel; set { midiChannel = value; ResetMidiOut(); } }
-        public int OutDevice { get => outDevice; set { outDevice = value; ResetMidiOut(); } }
+        public int MidiChannel { get => midiChannel; set { midiOk = false;  midiChannel = value; ResetMidiOut(); } }
+        public int OutDevice { get => outDevice; set { midiOk = false; outDevice = value; ResetMidiOut(); } }
 
         public MidiModuleNAudio(int outDevice, int midiChannel)
         {
@@ -31,25 +31,25 @@ namespace NeeqDMIs.MIDI
 
         public void PlayNote(int pitch, int velocity)
         {
-            if(midiOut!=null)
+            if(midiOut!=null && midiOk)
             midiOut.Send(MidiMessage.StartNote(pitch, velocity, MidiChannel).RawData);
         }
 
         public void SendMessage(int byte1, int byte2, int byte3)
         {
-            if(midiOut!=null)
+            if(midiOut!=null && midiOk)
             midiOut.Send(MidiMessage.ChangeControl(byte1, byte2, midiChannel).RawData);
         }
 
         public void SetExpression(int expression)
         {
-            if(midiOut!=null)
+            if(midiOut!=null && midiOk)
             midiOut.Send(MidiMessage.ChangeControl(11, expression, midiChannel).RawData);
         }
 
         public void SetModulation(int modulation)
         {
-            if(midiOut!=null)
+            if(midiOut!=null && midiOk)
             midiOut.Send(MidiMessage.ChangeControl(1, modulation, midiChannel).RawData);
         }
 
@@ -66,25 +66,25 @@ namespace NeeqDMIs.MIDI
             int status = 0b1110 << 4;
 
             MidiMessage message = new MidiMessage(status, lsb, msb);
-            if(midiOut!=null)
+            if(midiOut!=null && midiOk)
             midiOut.Send(message.RawData);
         }
 
         public void SetPitchNoBend()
         {
-            if(midiOut!=null)
+            if(midiOut!=null && midiOk)
             SetPitchBend(8192);
         }
 
         public void SetPressure(int pressure)
         {
-            if(midiOut!=null)
+            if(midiOut!=null && midiOk)
             midiOut.Send(MidiMessage.ChangeControl(7, pressure, midiChannel).RawData);
         }
 
         public void StopNote(int pitch)
         {
-            if(midiOut!=null)
+            if(midiOut!=null && midiOk)
             midiOut.Send(MidiMessage.StopNote(pitch, 0, MidiChannel).RawData);
         }
 
