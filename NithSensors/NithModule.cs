@@ -44,7 +44,7 @@ namespace NeeqDMIs.NithSensors
 
                     if (line.StartsWith("$"))
                     {
-                        string TEST = "";
+                        //string TEST = "";
                         error = NithErrors.OK; // Set to ok, then check if wrong
                         try
                         {
@@ -52,7 +52,7 @@ namespace NeeqDMIs.NithSensors
                             string[] fields = line.Split('|');
                             string[] firstField = fields[0].Split('-');
                             string[] arguments = fields[2].Split('&');
-                            TEST = firstField[0];
+                            //TEST = firstField[0];
 
                             // Parsings
                             data.RawLine = line;
@@ -69,8 +69,8 @@ namespace NeeqDMIs.NithSensors
                                 if (s[1].Contains("/"))
                                 {
                                     string[] propString = s[1].Split('/');
-                                    double propVal = double.Parse(propString[0], CultureInfo.InvariantCulture) * 100 / int.Parse(propString[1], CultureInfo.InvariantCulture);
-                                    value = propVal.ToString();
+                                    double propVal = (double.Parse(propString[0], CultureInfo.InvariantCulture) * 100) / double.Parse(propString[1], CultureInfo.InvariantCulture);
+                                    value = propVal.ToString(CultureInfo.InvariantCulture);
                                 }
                                 else
                                 {
@@ -139,16 +139,16 @@ namespace NeeqDMIs.NithSensors
                 error = NithErrors.Connection;
             }
 
-            // Checks and parsing done! Send to sensorbehaviors
-            foreach (INithSensorBehavior sbeh in SensorBehaviors)
-            {
-                sbeh.HandleData(data);
-            }
-
             // Send to errorbehaviors
             foreach (INithErrorBehavior ebeh in ErrorBehaviors)
             {
                 ebeh.HandleError(error);
+            }
+
+            // Checks and parsing done! Send to sensorbehaviors
+            foreach (INithSensorBehavior sbeh in SensorBehaviors)
+            {
+                sbeh.HandleData(data);
             }
 
             LastSensorData = data;

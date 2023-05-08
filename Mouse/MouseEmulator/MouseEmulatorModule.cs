@@ -7,8 +7,8 @@ namespace NeeqDMIs.Eyetracking.MouseEmulator
     public class MouseEmulatorModule
     {
         private IPointFilter filter;
-        private Point currentGazePoint = new Point();
-        private bool eyetrackerToMouse = false;
+        private Point currentInput = new Point();
+        private bool enabled = false;
         private bool cursorVisible = true;
 
         public MouseEmulatorModule(IPointFilter filter)
@@ -18,10 +18,10 @@ namespace NeeqDMIs.Eyetracking.MouseEmulator
 
         public IPointFilter Filter { get => filter; set => filter = value; }
 
-        public bool EyetrackerToMouse
+        public bool Enabled
         {
-            get { return eyetrackerToMouse; }
-            set { eyetrackerToMouse = value; }
+            get { return enabled; }
+            set { enabled = value; }
         }
 
         public bool CursorVisible
@@ -31,17 +31,18 @@ namespace NeeqDMIs.Eyetracking.MouseEmulator
             {
                 cursorVisible = value;
                 MouseFunctions.ShowCursor(cursorVisible);
+                
             }
         }
 
-        public void ReceiveGazePointData(double X, double Y)
+        public void ReceiveInputCoordinates(double X, double Y)
         {
-            if (eyetrackerToMouse)
+            if (enabled)
             {
-                currentGazePoint.X = (int)X;
-                currentGazePoint.Y = (int)Y;
+                currentInput.X = (int)X;
+                currentInput.Y = (int)Y;
 
-                Filter.Push(currentGazePoint);
+                Filter.Push(currentInput);
 
                 MouseFunctions.SetCursorPos(Filter.GetOutput().X, Filter.GetOutput().Y);
             }

@@ -8,6 +8,7 @@ namespace NeeqDMIs.Music
 {
     public class Scale
     {
+
         #region Fields
         private ScaleCodes scaleCode;
         private AbsNotes rootNote;

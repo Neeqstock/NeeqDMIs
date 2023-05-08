@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows.Media;
 
 namespace NeeqDMIs.Music
 {
@@ -186,6 +187,11 @@ namespace NeeqDMIs.Music
             {
                 return false;
             }
+        }
+
+        public static Color GetStandardColor(this MidiNotes note)
+        {
+            return note.ToAbsNote().GetStandardColor();
         }
 
         private static readonly double[] midiFreqs;

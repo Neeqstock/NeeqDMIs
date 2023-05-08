@@ -1,4 +1,5 @@
-﻿namespace NeeqDMIs.Template
+﻿
+namespace NeeqDMIs.Template
 {
     public static class RackTemplate
     {
