@@ -56,14 +56,24 @@ namespace NeeqDMIs.Mouse
             return MouseFunctions.GetCursorPosition();
         }
 
+        public void SendMouseButtonEvent(MouseButtonFlags eventFlag)
+        {
+            MouseFunctions.MouseEvent(eventFlag);
+        }
+
+        public void SendMouseWheelMove(int speed)
+        {
+            MouseFunctions.WheelMove(speed);
+        }
+
         public void SetCursorPosition(Point coordinates)
         {
-            MouseFunctions.SetCursorPos(coordinates.X, coordinates.Y);
+            MouseFunctions.SetCursorPosition(coordinates.X, coordinates.Y);
         }
 
         public void SetCursorVisible(bool visible)
         {
-            MouseFunctions.ShowCursor(visible);
+            MouseFunctions.ShowMouseCursor(visible);
         }
 
         public void SetFpsOffsetToCurrentMousePosition()

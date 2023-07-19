@@ -30,12 +30,12 @@ namespace NeeqDMIs.Eyetracking.MouseEmulator
             set
             {
                 cursorVisible = value;
-                MouseFunctions.ShowCursor(cursorVisible);
+                MouseFunctions.ShowMouseCursor(cursorVisible);
                 
             }
         }
 
-        public void ReceiveInputCoordinates(double X, double Y)
+        public void SetCursorCoordinates(double X, double Y)
         {
             if (enabled)
             {
@@ -44,7 +44,7 @@ namespace NeeqDMIs.Eyetracking.MouseEmulator
 
                 Filter.Push(currentInput);
 
-                MouseFunctions.SetCursorPos(Filter.GetOutput().X, Filter.GetOutput().Y);
+                MouseFunctions.SetCursorPosition(Filter.GetOutput().X, Filter.GetOutput().Y);
             }
         }
     }

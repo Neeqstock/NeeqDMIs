@@ -41,10 +41,10 @@ namespace NeeqDMIs.Eyetracking.Eyetribe
                 switch (MouseEmulatorGazeMode)
                 {
                     case GazeMode.Raw:
-                        MouseEmulator.ReceiveInputCoordinates(gazeData.RawCoordinates.X, gazeData.RawCoordinates.Y);
+                        MouseEmulator.SetCursorCoordinates(gazeData.RawCoordinates.X, gazeData.RawCoordinates.Y);
                         break;
                     case GazeMode.Smooth:
-                        MouseEmulator.ReceiveInputCoordinates(gazeData.SmoothedCoordinates.X, gazeData.SmoothedCoordinates.Y);
+                        MouseEmulator.SetCursorCoordinates(gazeData.SmoothedCoordinates.X, gazeData.SmoothedCoordinates.Y);
                         break;
 
                 }

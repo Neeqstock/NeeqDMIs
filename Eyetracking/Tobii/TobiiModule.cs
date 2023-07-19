@@ -88,16 +88,11 @@ namespace NeeqDMIs.Eyetracking.Tobii
         {
             LastGazePointData = e.Data;
 
-            MouseEmulator.ReceiveInputCoordinates(e.Data.X, e.Data.Y);
+            MouseEmulator.SetCursorCoordinates(e.Data.X, e.Data.Y);
             foreach (ITobiiGazePointBehavior behavior in gazePointBehaviors)
             {
                 behavior.ReceiveGazePoint(e.Data);
             }
-        }
-
-        public void Start()
-        {
-            //tobiiHost.InitializeWpfAgent();
         }
 
         public void Dispose()

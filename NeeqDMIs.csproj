@@ -185,6 +185,7 @@
     <Compile Include="Headtracking\NithHT\ANithHTBehavior.cs" />
     <Compile Include="Headtracking\Polar3DData.cs" />
     <Compile Include="Headtracking\NeeqHT\NeeqHTModes.cs" />
+    <Compile Include="Mouse\MouseButtonFlags.cs" />
     <Compile Include="NithSensors\ANithErrorStringBehavior.cs" />
     <Compile Include="NithSensors\INithErrorBehavior.cs" />
     <Compile Include="NithSensors\NithErrorData.cs" />
@@ -246,7 +247,7 @@
     <Compile Include="Template\RackTemplate.cs" />
     <Compile Include="Mappers\AngleBaseChanger.cs" />
     <Compile Include="Filters\ArrayFilters\IDoubleFilter.cs" />
-    <Compile Include="Audio\AudioFormatFft.cs" />
+    <Compile Include="Audio\AudioInParameters.cs" />
     <Compile Include="Mappers\SegmentMapper.cs" />
     <Compile Include="Filters\ValueFilters\DoubleFilterMAExpDecaying.cs" />
     <Compile Include="Filters\ValueFilters\IDoubleFilter.cs" />

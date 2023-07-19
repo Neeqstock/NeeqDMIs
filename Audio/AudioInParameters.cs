@@ -2,7 +2,7 @@
 
 namespace NeeqDMIs.Utils
 {
-    public class AudioFormatFft
+    public class AudioInParameters
     {
         private short[] ZeroPaddedArray;
         public int BitRate { get; private set; }
@@ -21,7 +21,7 @@ namespace NeeqDMIs.Utils
 
         public ZeroPaddingModes ZeroPaddingMode { get; private set; } //
 
-        public AudioFormatFft(int sampleRate, int bitRate, int channels, int bufferMilliseconds, ZeroPaddingModes zeroPaddingMode)
+        public AudioInParameters(int sampleRate, int bitRate, int channels, int bufferMilliseconds, ZeroPaddingModes zeroPaddingMode)
         {
             SampleRate = sampleRate;
             BitRate = bitRate;
